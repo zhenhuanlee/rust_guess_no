@@ -7,6 +7,9 @@ use std::cmp::Ordering;
 
 fn main() {
     let secret_number = rand::thread_rng().gen_range(1, 101);
+    println!("guess the number!");
+    println!("The secret number is {}!", secret_number);
+    println!("Please input your guess.");
 
     loop {
         if guess_no(secret_number) {
@@ -16,14 +19,6 @@ fn main() {
 }
 
 fn guess_no(secret_number: u32) -> bool {
-    println!("guess the number!");
-
-    
-
-    println!("The secret number is {}!", secret_number);
-
-    println!("Please input your guess.");
-
     let mut guess = String::new();
     // mut ~ mutable
     // String UTF-8
@@ -32,8 +27,10 @@ fn guess_no(secret_number: u32) -> bool {
     io::stdin().read_line(&mut guess)
         .expect("Failed to read line.");
 
-    let guess: u32 = guess.trim().parse().
-        expect("please type a number");
+    let guess: u32 = match guess.trim().parse(){
+        Ok(num) => num,
+        Err(_)  => 0, // 不管任何错误都...
+    };
 
     println!("You guess: {}", guess);
 
